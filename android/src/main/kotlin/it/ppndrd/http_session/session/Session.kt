@@ -50,8 +50,7 @@ class Session(private val context: Context) {
     fun multiPartRequest(url: String, fileFieldName: String, fileUrl: String, data: HashMap<String, String>, result: (String)->Unit) {
         val img = File(fileUrl)
         if (img.exists()) {
-            val newData = HashMap(data)
-            val multipartRequest = MultipartRequest(url, { result("") }, { result(it) }, img, newData, fileFieldName)
+            val multipartRequest = MultipartRequest(url, { result("") }, { result(it) }, img, data, fileFieldName)
             multipartRequest.retryPolicy = DefaultRetryPolicy(
                 0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
