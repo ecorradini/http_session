@@ -51,7 +51,7 @@ class Session {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-            request.httpBody = try self.createBody(with: newData, filePathKey: fileFieldName, paths: [fileUrl], boundary: boundary)
+            request.httpBody = try self.createBody(with: data, filePathKey: fileFieldName, paths: [fileUrl], boundary: boundary)
 
             let task = self.session.dataTask(with: request) { (addData, response, error) in
                 guard let data = addData, let response = response as? HTTPURLResponse, error == nil else {

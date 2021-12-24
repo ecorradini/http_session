@@ -3,10 +3,20 @@ import UIKit
 
 public class SwiftHttpSessionPlugin: NSObject, FlutterPlugin {
 
-    var session: Session?
+    let session: Session = Session()
+
+    public func convertToDictionary(text: String) -> [String: String]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        session = Session()
         let channel = FlutterMethodChannel(name: "http_session", binaryMessenger: registrar.messenger())
         let instance = SwiftHttpSessionPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
@@ -21,7 +31,7 @@ public class SwiftHttpSessionPlugin: NSObject, FlutterPlugin {
             let url: String = args["url"] as! String
             let dataString: String  = args["data"] as! String
             let data: [String:String] = self.convertToDictionary(text: dataString) ?? [String:String]()
-            self.session!.post(url: url, data: data) { response in
+            self.session.post(url: url, data: data) { response in
                 result(response)
             }
         }
@@ -31,7 +41,7 @@ public class SwiftHttpSessionPlugin: NSObject, FlutterPlugin {
                 return
             }
             let url: String = args["url"] as! String
-            self.session!.get(url: url) { response in
+            self.session.get(url: url) { response in
                 result(response)
             }
         }
@@ -45,7 +55,7 @@ public class SwiftHttpSessionPlugin: NSObject, FlutterPlugin {
             let fileUrl: String = args["fileUrl"] as! String
             let dataString: String  = args["data"] as! String
             let data: [String:String] = self.convertToDictionary(text: dataString) ?? [String:String]()
-            self.session!.multiPartRequest(url: url, fileFieldName: fileFieldName, fileUrl: fileUrl, data: data) { response in
+            self.session.multiPartRequest(url: url, fileFieldName: fileFieldName, fileUrl: fileUrl, data: data) { response in
                 result(response)
             }
         }
