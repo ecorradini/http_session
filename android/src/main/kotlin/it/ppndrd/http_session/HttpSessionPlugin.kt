@@ -21,6 +21,7 @@ class HttpSessionPlugin: FlutterPlugin, MethodCallHandler {
   private var session: Session? = null
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    session = Session(flutterPluginBinding.applicationContext)
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "http_session")
     channel.setMethodCallHandler(this)
   }
