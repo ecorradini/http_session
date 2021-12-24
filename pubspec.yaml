@@ -32,6 +32,8 @@ flutter:
         pluginClass: HttpSessionPlugin
       ios:
         pluginClass: HttpSessionPlugin
+      macos:
+        pluginClass: HttpSessionPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
