@@ -1,5 +1,4 @@
 import Foundation
-import SwiftSoup
 import MobileCoreServices
 
 class Session {
